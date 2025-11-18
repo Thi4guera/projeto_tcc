@@ -25,7 +25,7 @@ class QueryRequest(BaseModel):
     sql: str
     params: List[Any] = []
     limit: Optional[int] = None
-    offset: Optional[int] = None   # ajustado
+    offset: Optional[int] = None   # ajustad
 
     class Config:
         schema_extra = {
