@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  sinnc_duck:
+    container_name: SinncDuck
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
+
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - .env
+
+    environment:
+      DUCKDB_PATH: /data/db/prf.duckdb
+      PRF_CSV_DIR: /data/prf
+
+    volumes:
+      - ./scripts:/app/scripts
+      - "D:/Faculdade/2º Semestre - 2025/Trabalho de Conclusão de Curso I - Projeto e Pesquisa/Base de dados:/data/prf:ro"
+      - "D:/Faculdade/2º Semestre - 2025/Trabalho de Conclusão de Curso I - Projeto e Pesquisa/db:/data/db"
+
+    command: ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]

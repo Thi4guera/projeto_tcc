@@ -1,0 +1,45 @@
+#   Aruquivos que não devem ser copiados para dentro da imagem do Docker
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ambientes virtuais
+env/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Bancos locais
+*.db
+*.duckdb
+
+# CSVs grandes (dataset PRF)
+*.csv
+
+# Arquivos comprimidos
+*.zip
+*.rar
+*.tar
+*.gz
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Variáveis de ambiente
+.env
+
+# Outros
+*.parquet
