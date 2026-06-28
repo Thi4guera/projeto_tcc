@@ -1,33 +1,65 @@
 import os
 from dotenv import load_dotenv
 
-# Carrega variáveis do .env
+# Garante que as variáveis do .env sejam carregadas
 load_dotenv()
 
 class Config:
-    
-    # Centraliza todas as variáveis de ambiente usadas no projeto. 
-    # Segue o modelo 12-Factor App.
 
     @property
-    def DUCKDB_PATH(self):
+    def DUCKDB_PATH(self) -> str:
         path = os.getenv("DUCKDB_PATH")
         if not path:
-            raise ValueError("❌ Variável de ambiente DUCKDB_PATH não definida.")
+            raise ValueError("❌ DUCKDB_PATH não definido no .env")
         return path
 
     @property
-    def PRF_CSV_DIR(self):
-        path = os.getenv("PRF_CSV_DIR")
+    def DB_PATH(self) -> str:
+        # Alias para DUCKDB_PATH — utilizado pelo api.py
+        return self.DUCKDB_PATH
+
+    @property
+    def CSV_BASE_PATH(self) -> str:
+        path = os.getenv("CSV_BASE_PATH")
         if not path:
-            raise ValueError("❌ Variável de ambiente PRF_CSV_DIR não definida.")
+            raise ValueError("❌ CSV_BASE_PATH não definido no .env")
         return path
 
     @property
-    def SCHEMAS(self):
-        raw = os.getenv("SCHEMAS", "")
-        return [s.strip() for s in raw.split(",") if s.strip()]
+    def MAX_ROWS(self) -> int:
+        return int(os.getenv("MAX_ROWS", "20000"))
 
     @property
-    def PRF_TARGET_TABLE(self):
-        return os.getenv("PRF_TARGET_TABLE", "prf.ocorrencias")
+    def QUERY_TIMEOUT_MS(self) -> int:
+        return int(os.getenv("QUERY_TIMEOUT_MS", "2000"))
+
+    # Configurações JWT
+    @property
+    def JWT_SECRET_KEY(self) -> str:
+        key = os.getenv("JWT_SECRET_KEY")
+        if not key:
+            raise ValueError("❌ JWT_SECRET_KEY não definido no .env")
+        return key
+
+    @property
+    def JWT_ALGORITHM(self) -> str:
+        return os.getenv("JWT_ALGORITHM", "HS256")
+
+    @property
+    def JWT_EXPIRE_MINUTES(self) -> int:
+        return int(os.getenv("JWT_EXPIRE_MINUTES", "60"))
+
+    # Credenciais da API
+    @property
+    def API_USERNAME(self) -> str:
+        user = os.getenv("API_USERNAME")
+        if not user:
+            raise ValueError("❌ API_USERNAME não definido no .env")
+        return user
+
+    @property
+    def API_PASSWORD(self) -> str:
+        pwd = os.getenv("API_PASSWORD")
+        if not pwd:
+            raise ValueError("❌ API_PASSWORD não definido no .env")
+        return pwd

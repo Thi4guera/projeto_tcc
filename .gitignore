@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Arquivos de ambiente
+.env
+.env.*
+!.env.example
+
+# Dados e bancos locais
+data/
+*.duckdb
+*.db
+*.sqlite
+*.csv
+*.zip
+
+# Logs/cache
+*.log
+.cache/
+.pytest_cache/
+
+# Sistema operacional
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,29 @@
+services:
+  duckdb_service:
+    container_name: SinncDuck
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
+
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - .env
+
+    environment:
+      CSV_BASE_PATH: ${CSV_BASE_PATH}
+      DUCKDB_PATH: ${DUCKDB_PATH}
+      MAX_ROWS: ${MAX_ROWS}
+      QUERY_TIMEOUT_MS: ${QUERY_TIMEOUT_MS}
+
+    volumes:
+      - "C:/Projeto/dados_microservico/data:/app/data"
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 2s
+      retries: 3
